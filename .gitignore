@@ -1,0 +1,17 @@
+# Dependencies
+node_modules
+
+# Environment variables
+.env
+
+# Build outputs
+/.next
+/dist
+
+# Database
+/db
+postgres-data
+
+# Logs
+*.log
+
