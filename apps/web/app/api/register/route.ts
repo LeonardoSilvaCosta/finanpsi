@@ -2,11 +2,40 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendWelcomeEmail } from "@/lib/email";
 import { generateDiagnosisAdvanced } from "@/lib/diagnosis";
+import { DiagnosisEvents, EmailEvents, WebhookEvents } from "@/lib/analytics";
+import { rateLimitMiddleware } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
+  // Rate limiting
+  const rateLimit = rateLimitMiddleware(req, {
+    maxRequests: Number(process.env.RATE_LIMIT_MAX_REQUESTS || 5),
+    windowMs: Number(process.env.RATE_LIMIT_WINDOW_MS || 15 * 60 * 1000), // 15 minutos
+  });
+
+  if (rateLimit && !rateLimit.allowed) {
+    console.warn("[Rate Limit] Requisição bloqueada:", rateLimit);
+    return NextResponse.json(
+      {
+        error: "Muitas requisições. Tente novamente mais tarde.",
+        retryAfter: Math.ceil((rateLimit.resetTime - Date.now()) / 1000),
+      },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(
+            Math.ceil((rateLimit.resetTime - Date.now()) / 1000)
+          ),
+          "X-RateLimit-Limit": String(process.env.RATE_LIMIT_MAX_REQUESTS || 5),
+          "X-RateLimit-Remaining": String(rateLimit.remaining),
+          "X-RateLimit-Reset": String(rateLimit.resetTime),
+        },
+      }
+    );
+  }
+
   try {
     const body = await req.json();
-    const { name, email, profession, challenge, groupAccepted } = body;
+    const { name, email, phone, profession, challenge, groupAccepted } = body;
 
     // Validar dados obrigatórios
     if (!email || !name) {
@@ -15,7 +44,14 @@ export async function POST(req: Request) {
 
     // Inserir no PostgreSQL via Prisma
     const lead = await prisma.lead.create({
-      data: { name, email, profession, challenge, groupAccepted },
+      data: {
+        name,
+        email,
+        phone: phone || null,
+        profession,
+        challenge,
+        groupAccepted,
+      },
     });
 
     // Gerar diagnóstico financeiro usando sistema avançado (híbrido)
@@ -63,6 +99,21 @@ export async function POST(req: Request) {
       }
       if (diagnosisResult.cached) {
         console.log(`[Diagnóstico] Diagnóstico servido do cache`);
+        DiagnosisEvents.diagnosisCached();
+      }
+
+      // Track diagnóstico gerado
+      DiagnosisEvents.diagnosisGenerated(
+        diagnosisMethod,
+        diagnosisResponseTime
+      );
+
+      // Track Flowise se foi usado
+      if (diagnosisResult.flowiseAttempted) {
+        DiagnosisEvents.flowiseUsed(
+          diagnosisResult.flowiseSuccess || false,
+          diagnosisResult.responseTime
+        );
       }
     } catch (e: any) {
       console.error("[Diagnóstico] Erro ao gerar:", e);
@@ -105,12 +156,19 @@ export async function POST(req: Request) {
           webhookSent = true;
           const responseData = await response.text().catch(() => "");
           console.log(`[Webhook] Sucesso:`, responseData);
+
+          // Track webhook success
+          WebhookEvents.webhookSent("n8n", true);
         }
       }
     } catch (e: any) {
       const errorMessage = e.message || String(e);
       const errorName = e.name || "";
       console.error("[Webhook] Falha ao enviar:", errorMessage);
+
+      // Track webhook error
+      WebhookEvents.webhookSent("n8n", false, errorMessage);
+
       if (
         errorName === "AbortError" ||
         errorMessage.includes("aborted") ||
@@ -126,8 +184,14 @@ export async function POST(req: Request) {
     try {
       await sendWelcomeEmail(email, name, diagnosisText || undefined);
       emailSent = true;
-    } catch (e) {
+
+      // Track email success
+      EmailEvents.emailSent(true);
+    } catch (e: any) {
       console.error("sendWelcomeEmail fail", e);
+
+      // Track email error
+      EmailEvents.emailSent(false, e.message || String(e));
     }
 
     return NextResponse.json({
