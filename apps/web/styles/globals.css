@@ -220,6 +220,39 @@
     color: hsl(var(--text-tertiary));
   }
 
+  /* Cores CSS Variables */
+  .text-primary {
+    color: hsl(var(--primary));
+  }
+
+  .text-primary-dark {
+    color: hsl(var(--primary-dark));
+  }
+
+  .text-primary-light {
+    color: hsl(var(--primary-light));
+  }
+
+  .text-primary-foreground {
+    color: hsl(var(--primary-foreground));
+  }
+
+  .text-success {
+    color: hsl(var(--success));
+  }
+
+  .text-info {
+    color: hsl(var(--info));
+  }
+
+  .text-footer-text {
+    color: hsl(var(--footer-text));
+  }
+
+  .text-accent-pink {
+    color: hsl(var(--accent-pink));
+  }
+
   /* Backgrounds customizados */
   .bg-finansi-primary {
     background-color: hsl(var(--primary));
@@ -237,9 +270,33 @@
     background-color: hsl(var(--background));
   }
 
+  .bg-primary {
+    background-color: hsl(var(--primary));
+  }
+
+  .bg-primary-dark {
+    background-color: hsl(var(--primary-dark));
+  }
+
+  .bg-primary-light {
+    background-color: hsl(var(--primary-light));
+  }
+
+  .bg-success {
+    background-color: hsl(var(--success));
+  }
+
+  .bg-footer-bg {
+    background-color: hsl(var(--footer-bg));
+  }
+
   /* Borders customizados */
   .border-finansi-primary {
     border-color: hsl(var(--primary));
+  }
+
+  .border-footer-border {
+    border-color: hsl(var(--footer-border));
   }
 
   /* Animações */

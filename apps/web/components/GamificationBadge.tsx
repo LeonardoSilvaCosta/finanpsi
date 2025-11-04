@@ -1,6 +1,10 @@
 "use client";
 
-import { useGamification, calculateOverallProgress, getNextBadge } from "@/lib/gamification";
+import {
+  useGamification,
+  calculateOverallProgress,
+  getNextBadge,
+} from "@/lib/gamification";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 
@@ -9,18 +13,23 @@ interface GamificationBadgeProps {
   showProgress?: boolean;
 }
 
-export default function GamificationBadge({ compact = false, showProgress = true }: GamificationBadgeProps) {
+export default function GamificationBadge({
+  compact = false,
+  showProgress = true,
+}: GamificationBadgeProps) {
   const { state } = useGamification();
   const [showNotification, setShowNotification] = useState(false);
-  const [lastUnlockedBadge, setLastUnlockedBadge] = useState<string | null>(null);
+  const [lastUnlockedBadge, setLastUnlockedBadge] = useState<string | null>(
+    null,
+  );
 
   const progress = calculateOverallProgress(state.badges);
   const nextBadge = getNextBadge(state.badges);
-  const unlockedCount = state.badges.filter(b => b.unlocked).length;
+  const unlockedCount = state.badges.filter((b) => b.unlocked).length;
 
   // Detectar quando um novo badge é desbloqueado
   useEffect(() => {
-    const unlockedBadges = state.badges.filter(b => b.unlocked);
+    const unlockedBadges = state.badges.filter((b) => b.unlocked);
     if (unlockedBadges.length > 0) {
       const latestBadge = unlockedBadges[unlockedBadges.length - 1];
       if (latestBadge.id !== lastUnlockedBadge) {
@@ -33,12 +42,12 @@ export default function GamificationBadge({ compact = false, showProgress = true
 
   if (compact) {
     return (
-      <div className="flex items-center gap-2 bg-gradient-to-r from-purple-50 to-blue-50 px-4 py-2 rounded-full">
+      <div className="flex items-center gap-2 bg-gradient-to-r from-green-50 to-primary-light/20 px-4 py-2 rounded-full">
         <div className="text-2xl">🏆</div>
         <div className="text-sm font-medium text-gray-700">
           {unlockedCount}/{state.badges.length} badges
         </div>
-        <div className="text-xs font-bold text-purple-600">{state.score} pts</div>
+        <div className="text-xs font-bold text-primary">{state.score} pts</div>
       </div>
     );
   }
@@ -56,12 +65,12 @@ export default function GamificationBadge({ compact = false, showProgress = true
           >
             <div className="flex items-center gap-3">
               <div className="text-3xl">
-                {state.badges.find(b => b.id === lastUnlockedBadge)?.icon}
+                {state.badges.find((b) => b.id === lastUnlockedBadge)?.icon}
               </div>
               <div>
                 <div className="font-bold text-lg">Badge Desbloqueado! 🎉</div>
                 <div className="text-sm opacity-90">
-                  {state.badges.find(b => b.id === lastUnlockedBadge)?.title}
+                  {state.badges.find((b) => b.id === lastUnlockedBadge)?.title}
                 </div>
               </div>
             </div>
@@ -79,7 +88,9 @@ export default function GamificationBadge({ compact = false, showProgress = true
         <div className="flex justify-between items-center mb-4">
           <div>
             <h3 className="text-2xl font-bold">Sua Jornada</h3>
-            <p className="text-purple-200 text-sm">Continue desbloqueando conquistas!</p>
+            <p className="text-purple-200 text-sm">
+              Continue desbloqueando conquistas!
+            </p>
           </div>
           <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-xl text-center">
             <div className="text-3xl font-bold">{state.score}</div>
@@ -117,15 +128,21 @@ export default function GamificationBadge({ compact = false, showProgress = true
             <div className="flex items-center gap-3">
               <div className="text-4xl opacity-50">{nextBadge.icon}</div>
               <div className="flex-1">
-                <div className="text-xs text-purple-200 mb-1">Próximo Badge</div>
+                <div className="text-xs text-purple-200 mb-1">
+                  Próximo Badge
+                </div>
                 <div className="font-bold">{nextBadge.title}</div>
-                <div className="text-sm text-purple-200">{nextBadge.description}</div>
+                <div className="text-sm text-purple-200">
+                  {nextBadge.description}
+                </div>
                 {nextBadge.progress !== undefined && nextBadge.maxProgress && (
                   <div className="mt-2">
-                    <div className="w-full bg-white/20 rounded-full h-2">
+                    <div className="w-full bg-primary/20 rounded-full h-3">
                       <motion.div
                         initial={{ width: 0 }}
-                        animate={{ width: `${(nextBadge.progress / nextBadge.maxProgress) * 100}%` }}
+                        animate={{
+                          width: `${(nextBadge.progress / nextBadge.maxProgress) * 100}%`,
+                        }}
                         className="h-full bg-yellow-400 rounded-full"
                       />
                     </div>
@@ -153,19 +170,30 @@ export default function GamificationBadge({ compact = false, showProgress = true
                 transition={{ delay: index * 0.05 }}
                 className={`
                   relative aspect-square rounded-xl flex items-center justify-center text-3xl
-                  ${badge.unlocked
-                    ? 'bg-white/20 border-2 border-yellow-400 shadow-lg'
-                    : 'bg-white/5 border-2 border-white/10 grayscale opacity-40'
+                  ${
+                    badge.unlocked
+                      ? "bg-white/20 border-2 border-yellow-400 shadow-lg"
+                      : "bg-white/5 border-2 border-white/10 grayscale opacity-40"
                   }
                   transition-all duration-300 hover:scale-110
                 `}
-                title={badge.unlocked ? badge.title : `Bloqueado: ${badge.title}`}
+                title={
+                  badge.unlocked ? badge.title : `Bloqueado: ${badge.title}`
+                }
               >
                 {badge.icon}
                 {badge.unlocked && (
                   <div className="absolute -top-1 -right-1 bg-green-400 rounded-full w-5 h-5 flex items-center justify-center">
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    <svg
+                      className="w-3 h-3 text-white"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </div>
                 )}
@@ -194,7 +222,9 @@ export default function GamificationBadge({ compact = false, showProgress = true
           >
             <div className="text-2xl mb-2">🏆</div>
             <div className="font-bold text-purple-900">Parabéns!</div>
-            <div className="text-sm text-purple-800">Você completou todas as conquistas!</div>
+            <div className="text-sm text-purple-800">
+              Você completou todas as conquistas!
+            </div>
           </motion.div>
         )}
       </motion.div>

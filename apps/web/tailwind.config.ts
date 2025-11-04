@@ -1,7 +1,7 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
-  content: ['./app/**/*.{ts,tsx,js,jsx}', './components/**/*.{ts,tsx}'],
+  content: ["./app/**/*.{ts,tsx,js,jsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     container: {
       center: true,
@@ -82,35 +82,58 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       fontSize: {
         // Tamanhos de fonte customizados seguindo a escala tipográfica
-        'display': ['3.75rem', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.02em' }], // 60px
-        'h1': ['3rem', { lineHeight: '1.2', fontWeight: '700', letterSpacing: '-0.01em' }], // 48px
-        'h2': ['2.25rem', { lineHeight: '1.3', fontWeight: '700' }], // 36px
-        'h3': ['1.875rem', { lineHeight: '1.4', fontWeight: '600' }], // 30px
-        'h4': ['1.5rem', { lineHeight: '1.5', fontWeight: '600' }], // 24px
-        'h5': ['1.25rem', { lineHeight: '1.5', fontWeight: '600' }], // 20px
-        'h6': ['1.125rem', { lineHeight: '1.5', fontWeight: '600' }], // 18px
-        'body-lg': ['1.125rem', { lineHeight: '1.75', fontWeight: '400' }], // 18px
-        'body': ['1rem', { lineHeight: '1.75', fontWeight: '400' }], // 16px
-        'body-sm': ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }], // 14px
-        'caption': ['0.75rem', { lineHeight: '1.5', fontWeight: '400' }], // 12px
+        display: [
+          "3.75rem",
+          { lineHeight: "1.1", fontWeight: "700", letterSpacing: "-0.02em" },
+        ], // 60px
+        h1: [
+          "3rem",
+          { lineHeight: "1.2", fontWeight: "700", letterSpacing: "-0.01em" },
+        ], // 48px
+        h2: ["2.25rem", { lineHeight: "1.3", fontWeight: "700" }], // 36px
+        h3: ["1.875rem", { lineHeight: "1.4", fontWeight: "600" }], // 30px
+        h4: ["1.5rem", { lineHeight: "1.5", fontWeight: "600" }], // 24px
+        h5: ["1.25rem", { lineHeight: "1.5", fontWeight: "600" }], // 20px
+        h6: ["1.125rem", { lineHeight: "1.5", fontWeight: "600" }], // 18px
+        "body-lg": ["1.125rem", { lineHeight: "1.75", fontWeight: "400" }], // 18px
+        body: ["1rem", { lineHeight: "1.75", fontWeight: "400" }], // 16px
+        "body-sm": ["0.875rem", { lineHeight: "1.5", fontWeight: "400" }], // 14px
+        caption: ["0.75rem", { lineHeight: "1.5", fontWeight: "400" }], // 12px
       },
       spacing: {
         // Espaçamentos customizados se necessário
-        '18': '4.5rem',
-        '88': '22rem',
+        "18": "4.5rem",
+        "88": "22rem",
       },
       boxShadow: {
-        'finansi': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-        'finansi-md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        'finansi-lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        finansi:
+          "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
+        "finansi-md":
+          "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+        "finansi-lg":
+          "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
   plugins: [],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

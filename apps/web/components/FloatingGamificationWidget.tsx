@@ -21,7 +21,7 @@ export default function FloatingGamificationWidget() {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         onClick={() => setIsMinimized(false)}
-        className="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform"
+        className="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-primary to-primary-light text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform"
         title="Mostrar progresso"
       >
         <Trophy className="w-6 h-6" />
@@ -38,7 +38,7 @@ export default function FloatingGamificationWidget() {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            className="bg-gradient-to-br from-purple-600 via-purple-700 to-blue-600 text-white rounded-2xl shadow-2xl cursor-pointer overflow-hidden"
+            className="bg-gradient-to-br from-primary via-primary-dark to-primary-light text-white rounded-2xl shadow-2xl cursor-pointer overflow-hidden"
             onClick={() => setIsExpanded(true)}
           >
             {/* Header */}
@@ -107,7 +107,7 @@ export default function FloatingGamificationWidget() {
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
-                  className="h-full bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"
+                  className="h-full bg-gradient-to-r from-success to-primary-light rounded-full"
                 />
               </div>
             </div>
@@ -222,11 +222,11 @@ export default function FloatingGamificationWidget() {
                     key={badge.id}
                     whileHover={{ scale: 1.1 }}
                     className={`
-                      aspect-square rounded-lg flex items-center justify-center text-2xl
+                      relative aspect-square rounded-lg flex items-center justify-center text-2xl border-2 transition-all duration-200
                       ${
                         badge.unlocked
-                          ? "bg-white/20 border-2 border-yellow-400 shadow-lg"
-                          : "bg-white/5 border-2 border-white/10 grayscale opacity-40"
+                          ? "bg-white/20 border-success shadow-lg"
+                          : "bg-white/5 border-white/20 grayscale opacity-40"
                       }
                     `}
                     title={
@@ -235,9 +235,9 @@ export default function FloatingGamificationWidget() {
                   >
                     {badge.icon}
                     {badge.unlocked && (
-                      <div className="absolute -top-1 -right-1 bg-green-400 rounded-full w-4 h-4 flex items-center justify-center">
+                      <div className="absolute -top-1 -right-1 bg-success rounded-full w-4 h-4 flex items-center justify-center">
                         <svg
-                          className="w-2.5 h-2.5 text-white"
+                          className="w-2 h-2 text-white"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >

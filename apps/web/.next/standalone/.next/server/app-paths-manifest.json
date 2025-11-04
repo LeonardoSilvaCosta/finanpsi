@@ -1,11 +1,11 @@
 {
-  "/api/analytics/route": "app/api/analytics/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/api/admin/leads/route": "app/api/admin/leads/route.js",
   "/api/instant-diagnosis/route": "app/api/instant-diagnosis/route.js",
-  "/api/register/route": "app/api/register/route.js",
   "/api/stats/subscribers/route": "app/api/stats/subscribers/route.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/thank-you/page": "app/thank-you/page.js",
+  "/api/register/route": "app/api/register/route.js",
+  "/api/analytics/route": "app/api/analytics/route.js",
+  "/admin/leads/page": "app/admin/leads/page.js",
   "/page": "app/page.js",
-  "/admin/leads/page": "app/admin/leads/page.js"
+  "/thank-you/page": "app/thank-you/page.js"
 }
