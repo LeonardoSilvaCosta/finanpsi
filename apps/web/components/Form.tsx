@@ -10,6 +10,8 @@ import {
   getValidationError,
 } from "@/lib/validation";
 import ProgressBar from "@/components/ProgressBar";
+import { useGamification } from "@/lib/gamification";
+import GamificationBadge from "@/components/GamificationBadge";
 
 const STEPS = [
   { number: 1, label: "Sobre você" },
@@ -19,6 +21,8 @@ const STEPS = [
 
 export default function Form() {
   const router = useRouter();
+  const { unlockBadge, completeStep, addScore, updateBadgeProgress } =
+    useGamification();
   const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState({
     name: "",
@@ -49,8 +53,10 @@ export default function Form() {
     ) {
       setFormStarted(true);
       FormEvents.formStarted();
+      // Desbloquear badge de início
+      unlockBadge("started");
     }
-  }, [form, formStarted]);
+  }, [form, formStarted, unlockBadge]);
 
   // Validação em tempo real
   function validateField(field: string, value: string) {
@@ -126,6 +132,19 @@ export default function Form() {
 
     if (validateStep(currentStep)) {
       if (currentStep < STEPS.length) {
+        // Gamification: Marcar step como completo e dar pontos
+        if (currentStep === 1) {
+          completeStep("step_1");
+          unlockBadge("profile_complete");
+          addScore(10);
+          updateBadgeProgress("almost_there", 33);
+        } else if (currentStep === 2) {
+          completeStep("step_2");
+          unlockBadge("challenge_shared");
+          addScore(20);
+          updateBadgeProgress("almost_there", 66);
+        }
+
         setCurrentStep(currentStep + 1);
 
         // Scroll suave para o topo do formulário
@@ -213,6 +232,17 @@ export default function Form() {
       if (res.ok) {
         const data = await res.json().catch(() => ({}) as any);
         setStatus("success");
+
+        // Gamification: Completar último step e desbloquear diagnóstico
+        completeStep("step_3");
+        if (form.groupAccepted) {
+          unlockBadge("community_member");
+          addScore(15);
+        }
+        completeStep("step_5");
+        unlockBadge("diagnosis_unlocked");
+        updateBadgeProgress("almost_there", 100);
+        addScore(30);
 
         // Track success
         FormEvents.formSuccess({

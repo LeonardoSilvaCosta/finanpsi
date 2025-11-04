@@ -9,6 +9,10 @@ import Footer from "@/components/Footer";
 import CredibilityBadges from "@/components/CredibilityBadges";
 import Testimonials from "@/components/Testimonials";
 import UrgencyCounter from "@/components/UrgencyCounter";
+import GamificationBadge from "@/components/GamificationBadge";
+import ShareIncentive from "@/components/ShareIncentive";
+import ProgressChecklist from "@/components/ProgressChecklist";
+import FloatingGamificationWidget from "@/components/FloatingGamificationWidget";
 import { trackPageView, trackEvent } from "@/lib/analytics";
 
 export default function Home() {
@@ -19,6 +23,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#FFF8F5]">
       <Header />
+
+      {/* Floating Gamification Widget */}
+      <FloatingGamificationWidget />
 
       <main>
         {/* Hero Section */}
@@ -46,20 +53,29 @@ export default function Home() {
 
             {/* Título Principal */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#333333] mb-6 leading-tight max-w-4xl mx-auto">
-              Diagnóstico Financeiro e Saúde Emocional para Profissionais da Saúde
+              Diagnóstico Financeiro e Saúde Emocional para Profissionais da
+              Saúde
             </h1>
 
             {/* Descrição */}
             <p className="text-lg md:text-xl text-[#666666] mb-8 max-w-3xl mx-auto leading-relaxed">
-              Transforme sua relação com dinheiro em poucos minutos. Descubra onde está seu maior desafio com dívidas, investimento ou ansiedade financeira — e receba um guia prático para mudar sua realidade!
+              Transforme sua relação com dinheiro em poucos minutos. Descubra
+              onde está seu maior desafio com dívidas, investimento ou ansiedade
+              financeira — e receba um guia prático para mudar sua realidade!
             </p>
 
             {/* Botões CTA */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <button
                 onClick={() => {
-                  trackEvent("cta_primary_clicked", { button: "fazer_diagnostico" }, { category: "cta" });
-                  document.getElementById("form-section")?.scrollIntoView({ behavior: "smooth" });
+                  trackEvent(
+                    "cta_primary_clicked",
+                    { button: "fazer_diagnostico" },
+                    { category: "cta" },
+                  );
+                  document
+                    .getElementById("form-section")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="bg-[#6B995E] text-white px-8 py-4 rounded-lg font-medium hover:opacity-90 transition-opacity text-base"
               >
@@ -67,8 +83,14 @@ export default function Home() {
               </button>
               <button
                 onClick={() => {
-                  trackEvent("cta_secondary_clicked", { button: "conhecer_comunidade" }, { category: "cta" });
-                  document.getElementById("form-section")?.scrollIntoView({ behavior: "smooth" });
+                  trackEvent(
+                    "cta_secondary_clicked",
+                    { button: "conhecer_comunidade" },
+                    { category: "cta" },
+                  );
+                  document
+                    .getElementById("form-section")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="bg-[#A8D5BA] text-[#6B995E] border-2 border-[#6B995E] px-8 py-4 rounded-lg font-medium hover:bg-[#6B995E] hover:text-white transition-colors text-base"
               >
@@ -140,6 +162,46 @@ export default function Home() {
         {/* Seção "O que você vai receber" */}
         <FeatureCards />
 
+        {/* Gamification Section */}
+        <section className="py-12 bg-gradient-to-b from-purple-50 to-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-10">
+                <h2 className="text-3xl md:text-4xl font-bold text-[#333333] mb-4">
+                  🎮 Acompanhe Sua Jornada
+                </h2>
+                <p className="text-[#666666] text-lg">
+                  Complete os passos e desbloqueie conquistas exclusivas!
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                {/* Progress Checklist */}
+                <div>
+                  <ProgressChecklist />
+                </div>
+
+                {/* Gamification Badge */}
+                <div className="space-y-6">
+                  <GamificationBadge showProgress={true} />
+
+                  {/* Mini motivational card */}
+                  <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-orange-200 rounded-xl p-6 text-center">
+                    <div className="text-3xl mb-2">🏆</div>
+                    <h3 className="font-bold text-gray-900 mb-2">
+                      Você está a 1 passo de desbloquear seu diagnóstico!
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      Continue preenchendo o formulário para ganhar mais pontos
+                      e badges
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Form Section */}
         <section id="form-section" className="py-16 bg-white">
           <div className="container mx-auto px-4">
@@ -152,7 +214,7 @@ export default function Home() {
                   Vagas limitadas para teste piloto! Garanta a sua agora.
                 </p>
               </div>
-              
+
               {/* Contador de Urgência */}
               <div className="mb-8">
                 <UrgencyCounter totalSlots={100} baseCount={0} />
@@ -160,8 +222,27 @@ export default function Home() {
 
               <Form />
               <p className="text-center text-[#666666] text-sm mt-4">
-                Ao se cadastrar, você receberá todas as informações para a comunidade e bônus exclusivos.
+                Ao se cadastrar, você receberá todas as informações para a
+                comunidade e bônus exclusivos.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Share Incentive Section */}
+        <section className="py-16 bg-gradient-to-b from-white to-purple-50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
+              <ShareIncentive
+                title="🎁 Desbloqueie Bônus Exclusivos!"
+                description="Compartilhe com amigos e ganhe acesso imediato a materiais premium"
+                bonusItems={[
+                  "📊 Planilha de Controle Financeiro Avançada",
+                  "📚 E-book: 7 Passos para Saúde Financeira",
+                  "🎯 Guia Prático de Investimentos para Iniciantes",
+                  "💡 Checklist de Organização Financeira",
+                ]}
+              />
             </div>
           </div>
         </section>
