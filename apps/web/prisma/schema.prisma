@@ -19,3 +19,181 @@ model Lead {
   createdAt     DateTime @default(now())
 }
 
+// ============================================
+// BLOG MODELS
+// ============================================
+
+enum BlogCategory {
+  FINANCAS_COMPORTAMENTAIS
+  SAUDE_EMOCIONAL_DINHEIRO
+  PLANEJAMENTO_PRATICO
+  TENDENCIAS_MERCADO
+  CASOS_SUCESSO
+  GERAL
+}
+
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum BlogContentType {
+  POST
+  VIDEO
+  PODCAST
+  LIVE
+}
+
+model BlogPost {
+  id          String          @id @default(cuid())
+  title       String
+  slug        String          @unique
+  excerpt     String?         @db.Text
+  content     String          @db.Text
+  contentType BlogContentType @default(POST)
+  
+  // Categorização
+  category    BlogCategory    @default(GERAL)
+  tags        String[]
+  
+  // SEO
+  metaTitle       String?
+  metaDescription String?      @db.Text
+  metaKeywords    String[]
+  
+  // Mídia
+  featuredImage   String?
+  thumbnailImage  String?
+  
+  // Vídeo (se contentType = VIDEO)
+  videoUrl        String?
+  videoPlatform   String?      // "youtube", "vimeo", etc
+  videoDuration   Int?         // em segundos
+  
+  // Podcast (se contentType = PODCAST)
+  audioUrl        String?
+  transcript      String?      @db.Text
+  episodeNumber   Int?
+  
+  // Live (se contentType = LIVE)
+  liveDate        DateTime?
+  liveUrl         String?
+  isRecorded      Boolean      @default(false)
+  recordedUrl     String?
+  
+  // Status e publicação
+  status          BlogStatus   @default(DRAFT)
+  publishedAt     DateTime?
+  scheduledAt     DateTime?
+  
+  // Autor
+  authorName      String       @default("Equipe FinanPsi")
+  authorEmail     String?
+  
+  // Estatísticas
+  views           Int          @default(0)
+  likes           Int          @default(0)
+  shares          Int          @default(0)
+  
+  // Relacionamentos
+  comments        BlogComment[]
+  engagements     BlogEngagement[]
+  
+  // Timestamps
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  
+  @@index([slug])
+  @@index([category])
+  @@index([status])
+  @@index([contentType])
+  @@index([publishedAt])
+  @@index([tags])
+}
+
+model BlogComment {
+  id          String      @id @default(cuid())
+  blogPostId  String
+  blogPost    BlogPost    @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  
+  // Autor do comentário
+  authorName  String
+  authorEmail String?
+  authorUrl   String?
+  
+  // Conteúdo
+  content     String      @db.Text
+  
+  // Moderação
+  isApproved  Boolean     @default(false)
+  isSpam      Boolean     @default(false)
+  moderatedAt DateTime?
+  moderatedBy String?
+  
+  // Resposta a outro comentário (threading)
+  parentId    String?
+  parent      BlogComment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies     BlogComment[] @relation("CommentReplies")
+  
+  // Timestamps
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  @@index([blogPostId])
+  @@index([isApproved])
+  @@index([parentId])
+}
+
+model BlogEngagement {
+  id          String      @id @default(cuid())
+  blogPostId  String
+  blogPost    BlogPost    @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  
+  // Tipo de engajamento
+  type        String      // "like", "view", "share", "bookmark"
+  
+  // Identificação do usuário
+  userIp      String?
+  userAgent   String?
+  sessionId   String?
+  
+  // Dados adicionais
+  metadata    Json?       // Para armazenar dados extras (ex: plataforma de compartilhamento)
+  
+  createdAt   DateTime    @default(now())
+  
+  @@index([blogPostId])
+  @@index([type])
+  @@index([userIp])
+  @@index([sessionId])
+  @@unique([blogPostId, type, userIp, sessionId])
+}
+
+model NewsletterSubscriber {
+  id          String      @id @default(cuid())
+  email       String      @unique
+  name        String?
+  
+  // Preferências
+  categories  BlogCategory[]
+  tags        String[]
+  
+  // Status
+  isActive    Boolean     @default(true)
+  isVerified  Boolean     @default(false)
+  verifiedAt  DateTime?
+  
+  // Unsubscribe
+  unsubscribedAt DateTime?
+  unsubscribeToken String? @unique
+  
+  // Timestamps
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  @@index([email])
+  @@index([isActive])
+  @@index([isVerified])
+}
+

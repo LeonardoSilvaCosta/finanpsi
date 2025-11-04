@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Importar fonte Inter do Google Fonts (com fallback para sistema se não disponível) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 @layer base {
   :root {
     /* ============================================
@@ -104,6 +107,7 @@
       font-feature-settings:
         "rlig" 1,
         "calt" 1;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
   }
 }

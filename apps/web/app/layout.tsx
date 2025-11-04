@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "../styles/globals.css";
 import Analytics from "@/components/Analytics";
 import { GamificationProvider } from "@/lib/gamification";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "FinanPsi - Planejamento Financeiro para Psicólogos",
@@ -27,7 +20,7 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={`${inter.variable} ${inter.className}`}>
+      <body>
         <Analytics />
         <GamificationProvider>{children}</GamificationProvider>
       </body>
