@@ -3,7 +3,11 @@ import { Inter } from "next/font/google"
 import "../styles/globals.css"
 import Analytics from "@/components/Analytics"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "FinanPsi - Planejamento Financeiro para Psicólogos",
@@ -21,7 +25,7 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${inter.className}`}>
         <Analytics />
         {children}
       </body>

@@ -4,36 +4,76 @@
 
 @layer base {
   :root {
-    /* Cores baseadas no design FinanPsi */
-    --background: 25 100% 97%; /* #FFF8F5 - pale peach/blush */
-    --foreground: 0 0% 20%; /* #333333 - dark gray/black */
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 20%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 20%;
-    --primary: 120 25% 45%; /* #6B995E - medium green */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 100%;
-    --secondary-foreground: 120 25% 45%;
-    --muted: 0 0% 60%; /* #999999 - light gray */
-    --muted-foreground: 0 0% 40%; /* #666666 - medium gray */
-    --accent: 120 25% 45%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 50% 60%; /* #CC5252 - dark red */
-    --destructive-foreground: 0 0% 100%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 120 25% 45%;
-    --radius: 0.5rem;
+    /* ============================================
+       PALETA DE CORES - FinanPsi
+       ============================================ */
     
-    /* Cores específicas do design */
-    --green-dark: 120 35% 38%; /* #4F7942 - dark green for logo */
-    --green-medium: 120 25% 45%; /* #6B995E - medium green for buttons */
-    --badge-bg: 0 75% 95%; /* #FCE8E8 - light pink for badge */
-    --badge-text: 0 50% 60%; /* #CC5252 - dark red for badge text */
+    /* Cores Base - Background e Texto */
+    --background: 25 100% 97%; /* #FFF8F5 - Bege claro/pêssego pálido */
+    --foreground: 0 0% 20%; /* #333333 - Cinza escuro para texto principal */
+    --card: 0 0% 100%; /* #FFFFFF - Branco para cards */
+    --card-foreground: 0 0% 20%; /* #333333 - Texto em cards */
+    --popover: 0 0% 100%; /* #FFFFFF - Branco para popovers */
+    --popover-foreground: 0 0% 20%; /* #333333 - Texto em popovers */
+    
+    /* Cores Primárias - Verde (Principal) */
+    --primary: 120 25% 45%; /* #6B995E - Verde médio para botões e ações principais */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF - Texto branco sobre verde */
+    --primary-dark: 120 35% 38%; /* #4F7942 - Verde escuro para logo */
+    --primary-light: 120 40% 75%; /* #A8D5BA - Verde claro para botão secundário */
+    --primary-accent: 120 60% 65%; /* #8BC34A - Verde claro para checkmarks e destaques */
+    
+    /* Cores Secundárias */
+    --secondary: 0 0% 100%; /* #FFFFFF - Branco */
+    --secondary-foreground: 120 25% 45%; /* #6B995E - Verde médio */
+    
+    /* Cores de Acento - Cores dos Ícones */
+    --accent: 120 25% 45%; /* #6B995E - Verde médio */
+    --accent-foreground: 0 0% 100%; /* #FFFFFF - Branco */
+    --accent-brown: 25 75% 30%; /* #8B4513 - Marrom para badge de lançamento */
+    --accent-blue: 210 70% 60%; /* #4A90E2 - Azul para ícones */
+    --accent-pink: 340 80% 55%; /* #E91E63 - Rosa para ícones */
+    
+    /* Cores de Texto - Hierarquia */
+    --text-primary: 0 0% 20%; /* #333333 - Texto principal (títulos, textos importantes) */
+    --text-secondary: 0 0% 40%; /* #666666 - Texto secundário (descrições) */
+    --text-tertiary: 0 0% 60%; /* #999999 - Texto terciário (informações secundárias) */
+    --text-muted: 0 0% 60%; /* #999999 - Texto desbotado */
+    --text-muted-foreground: 0 0% 40%; /* #666666 - Texto desbotado mais escuro */
+    
+    /* Cores de Estado */
+    --destructive: 0 50% 60%; /* #CC5252 - Vermelho para ações destrutivas */
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF - Texto branco sobre vermelho */
+    --success: 120 60% 65%; /* #8BC34A - Verde claro para sucesso */
+    --warning: 45 90% 55%; /* Amarelo para avisos */
+    --info: 210 70% 60%; /* #4A90E2 - Azul para informações */
+    
+    /* Cores de Background Secundárias */
+    --background-dark: 0 0% 20%; /* #333333 - Fundo escuro (footer) */
+    --background-light: 0 0% 100%; /* #FFFFFF - Fundo branco */
+    
+    /* Cores de Borda e Input */
+    --border: 214.3 31.8% 91.4%; /* Borda padrão */
+    --input: 214.3 31.8% 91.4%; /* Input padrão */
+    --ring: 120 25% 45%; /* #6B995E - Ring de foco */
+    
+    /* Border Radius */
+    --radius: 0.5rem; /* 8px - Raio de borda padrão */
+    
+    /* Cores Específicas do Design - Badges e Elementos Especiais */
+    --badge-launch: 25 75% 30%; /* #8B4513 - Background do badge de lançamento */
+    --badge-launch-text: 0 0% 100%; /* #FFFFFF - Texto do badge */
+    --badge-info-bg: 0 75% 95%; /* #FCE8E8 - Background rosa claro para badges informativos */
+    --badge-info-text: 0 50% 60%; /* #CC5252 - Texto vermelho para badges informativos */
+    
+    /* Cores do Footer */
+    --footer-bg: 0 0% 20%; /* #333333 - Background do footer */
+    --footer-text: 0 0% 70%; /* Texto cinza claro do footer */
+    --footer-border: 0 0% 30%; /* Borda do footer */
   }
 
   .dark {
+    /* Tema Escuro - Para futuras implementações */
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
@@ -54,14 +94,149 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
+
+  @layer base {
+    * {
+      @apply border-border;
+    }
+    body {
+      @apply bg-background text-foreground;
+      font-feature-settings: "rlig" 1, "calt" 1;
+    }
+  }
 }
+
+/* ============================================
+   TIPOGRAFIA - FinanPsi
+   ============================================ */
 
 @layer base {
-  * {
-    @apply border-border;
+  /* Font Family já está definida no layout.tsx (Inter do Google Fonts) */
+  
+  /* Títulos */
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight;
+    color: hsl(var(--text-primary));
   }
-  body {
-    @apply bg-background text-foreground;
+  
+  h2 {
+    @apply text-3xl md:text-4xl font-bold leading-tight;
+    color: hsl(var(--text-primary));
+  }
+  
+  h3 {
+    @apply text-2xl font-semibold leading-snug;
+    color: hsl(var(--text-primary));
+  }
+  
+  h4 {
+    @apply text-xl font-semibold leading-snug;
+    color: hsl(var(--text-primary));
+  }
+  
+  /* Parágrafos */
+  p {
+    @apply text-base leading-relaxed;
+    color: hsl(var(--text-secondary));
+  }
+  
+  /* Textos pequenos */
+  small {
+    @apply text-sm leading-normal;
+    color: hsl(var(--text-tertiary));
+  }
+  
+  /* Links */
+  a {
+    @apply transition-colors;
+  }
+  
+  /* Botões - Base */
+  button {
+    @apply font-medium transition-all;
   }
 }
 
+/* ============================================
+   COMPONENTES PERSONALIZADOS
+   ============================================ */
+
+@layer components {
+  /* Badge de Lançamento */
+  .badge-launch {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium;
+    background-color: hsl(var(--badge-launch));
+    color: hsl(var(--badge-launch-text));
+  }
+  
+  /* Botão Primário */
+  .btn-primary {
+    @apply px-8 py-4 rounded-lg font-medium hover:opacity-90 transition-opacity text-base;
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+  
+  /* Botão Secundário */
+  .btn-secondary {
+    @apply px-8 py-4 rounded-lg font-medium border-2 transition-colors text-base;
+    background-color: hsl(var(--primary-light));
+    color: hsl(var(--primary));
+    border-color: hsl(var(--primary));
+  }
+  
+  .btn-secondary:hover {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+  
+  /* Card de Feature */
+  .card-feature {
+    @apply bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow;
+  }
+  
+  /* Texto de Destaque */
+  .text-highlight {
+    color: hsl(var(--primary));
+  }
+}
+
+/* ============================================
+   UTILITÁRIOS PERSONALIZADOS
+   ============================================ */
+
+@layer utilities {
+  /* Cores de texto customizadas */
+  .text-finansi-primary {
+    color: hsl(var(--text-primary));
+  }
+  
+  .text-finansi-secondary {
+    color: hsl(var(--text-secondary));
+  }
+  
+  .text-finansi-tertiary {
+    color: hsl(var(--text-tertiary));
+  }
+  
+  /* Backgrounds customizados */
+  .bg-finansi-primary {
+    background-color: hsl(var(--primary));
+  }
+  
+  .bg-finansi-primary-dark {
+    background-color: hsl(var(--primary-dark));
+  }
+  
+  .bg-finansi-primary-light {
+    background-color: hsl(var(--primary-light));
+  }
+  
+  .bg-finansi-background {
+    background-color: hsl(var(--background));
+  }
+  
+  /* Borders customizados */
+  .border-finansi-primary {
+    border-color: hsl(var(--primary));
+  }
+}

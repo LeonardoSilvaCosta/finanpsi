@@ -6,6 +6,9 @@ import Form from "@/components/Form";
 import FeatureCards from "@/components/FeatureCards";
 import BonusSection from "@/components/BonusSection";
 import Footer from "@/components/Footer";
+import CredibilityBadges from "@/components/CredibilityBadges";
+import Testimonials from "@/components/Testimonials";
+import UrgencyCounter from "@/components/UrgencyCounter";
 import { trackPageView, trackEvent } from "@/lib/analytics";
 
 export default function Home() {
@@ -131,6 +134,9 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Selos de Credibilidade */}
+        <CredibilityBadges />
+
         {/* Seção "O que você vai receber" */}
         <FeatureCards />
 
@@ -146,6 +152,12 @@ export default function Home() {
                   Vagas limitadas para teste piloto! Garanta a sua agora.
                 </p>
               </div>
+              
+              {/* Contador de Urgência */}
+              <div className="mb-8">
+                <UrgencyCounter totalSlots={100} baseCount={0} />
+              </div>
+
               <Form />
               <p className="text-center text-[#666666] text-sm mt-4">
                 Ao se cadastrar, você receberá todas as informações para a comunidade e bônus exclusivos.
@@ -156,6 +168,9 @@ export default function Home() {
 
         {/* Seção Bônus */}
         <BonusSection />
+
+        {/* Depoimentos */}
+        <Testimonials />
       </main>
 
       <Footer />
